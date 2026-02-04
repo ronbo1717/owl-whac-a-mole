@@ -24,6 +24,15 @@ export const Game: React.FC = () => {
     const timerRef = useRef<number | null>(null);
     const moleTimerRef = useRef<number | null>(null);
 
+    useEffect(() => {
+        // Prevent pinch zoom on iOS
+        const handleGestureStart = (e: Event) => {
+            e.preventDefault();
+        };
+        document.addEventListener('gesturestart', handleGestureStart);
+        return () => document.removeEventListener('gesturestart', handleGestureStart);
+    }, []);
+
     const startGame = () => {
         setScore(0);
         setTimeLeft(INITIAL_TIME);

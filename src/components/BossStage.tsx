@@ -17,20 +17,18 @@ export const BossStage: React.FC<BossStageProps> = ({ onClear, onFail }) => {
     useEffect(() => {
         if (hp <= 0) {
             onClear();
-            return;
-        }
-
-        if (timeLeft <= 0) {
+        } else if (timeLeft <= 0) {
             onFail();
-            return;
         }
+    }, [hp, timeLeft, onClear, onFail]);
 
+    useEffect(() => {
         const timer = setInterval(() => {
-            setTimeLeft((t) => t - 1);
+            setTimeLeft((prev) => prev - 1);
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [hp, timeLeft, onClear, onFail]);
+    }, []);
 
     const handleTap = (e: React.PointerEvent | React.MouseEvent) => {
         // Prevent default to avoid unintended behaviors like selection or zoom
